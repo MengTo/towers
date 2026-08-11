@@ -68,14 +68,15 @@ Towers is an independent study of East Asian tower architecture. The three tower
 
 ## More open source
 
+- **[Kage](https://github.com/MengTo/kage)** — an interactive five-chapter night walk through a Kyoto mountain temple, rendered live in Three.js. [Live](https://mengto.github.io/kage/)
 - **[The Complete Shelf](https://github.com/MengTo/complete-shelf)** — an original Three.js library of seven interactive clothbound hardcovers. [Live](https://mengto.github.io/complete-shelf/)
 - **[Sketchbook](https://github.com/MengTo/sketchbook)** — a page-flipping sketchbook of Singapore in one static HTML file. [Live](https://mengto.com)
 - **[Skills](https://github.com/MengTo/Skills)** — agent skills for designers and builders using Codex, Claude, Cursor and other AI coding agents. Browse them at [ui-skills.com](https://ui-skills.com).
 
 ## What I build
 
-- **[Aura](https://aura.build)** — an AI website builder that creates landing pages in seconds and exports to HTML and Figma.
 - **[Design+Code](https://designcode.io)** — learn to design and code React and Swift apps.
+- **[Aura](https://aura.build)** — an AI website builder that creates landing pages in seconds and exports to HTML and Figma.
 - **[DreamCut](https://dreamcut.ai)** — an AI video editor and screen recorder.
 
 ## Credits
