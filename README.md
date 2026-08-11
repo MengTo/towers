@@ -17,11 +17,15 @@ Built after seeing [@IndieDevHailey](https://x.com/IndieDevHailey)'s [ancient to
 - Drag to orbit the tower, or just move the pointer and the camera leans with it. The wheel zooms from 50% to 200%. Double-click or press `C` to recentre.
 - Scrub the timeline at the foot of the page to sit anywhere in the build, or press `Space` to pause it mid-air.
 - Four times of day that cross-fade rather than cut — morning, noon, sunset, night — each with its own sun, fog, ground and sky. Night brings out 39,200 stars.
-- Three weather states: clear, rain that pools the ground and kicks up splashes, and snow that whitens it.
+- Four weather states: clear; rain that pools the ground and kicks up splashes; a storm that drives the rain over sideways, throws lightning across the sky and answers with thunder a beat later; and snow that blows up into blizzards and keeps settling until the field has gone white.
 - A generated score and construction sounds per country: shakuhachi and koto for Japan, guqin and xiao for China, ranat ek and khim for Thailand, with mallet, chisel and tile sounds mixed under the build and a temple bell on completion.
+- Weather you can hear: rain on tile, a storm bed with the wind up, thunder that arrives late and quiet when the strike was far off, and winter wind that rises into a blizzard and drops back again.
+- A layout that rearranges rather than shrinks on a phone: the headline type moves into the sky, the controls come down into a strip within thumb reach, and two fingers pinch to zoom.
 - No build step, no dependencies to install, and no network requests. The page makes zero subresource requests once the document loads.
 
 ![The tenshu at 47%, scaffolding above the cut line and the percentage set large in the corner](assets/towers-building.jpg)
+
+![The Chinese pagoda lit from within during a night storm, rain falling and water standing on the field](assets/towers-storm.jpg)
 
 ## How it is made
 
@@ -33,9 +37,11 @@ Built after seeing [@IndieDevHailey](https://x.com/IndieDevHailey)'s [ancient to
 
 **The landscape.** The ground is a simplex heightfield sampled on a polar grid centred under the camera, coloured by slope, height and moisture rather than by texture. 104,000 grass blades are one instanced ribbon shaped entirely in the vertex shader, so the wind costs nothing on the CPU, and 2,400 stones are scattered by the same height function that draws the terrain. The sky is a six-stop gradient on a dome, with stars in three size classes confined to the elevation band the camera can actually reach — scattering them over the whole sphere with a 10° lens puts about six on screen. A finished frame is 1.31M triangles in 18 draw calls.
 
-**The sound.** Three ambient loops, three construction beds and three bells were generated with Higgsfield — `sonilo_music` for the score, `mirelo_text_to_audio` for the effects — encoded to mono AAC and embedded as data URIs (609 KB). Music cross-fades on a gain bus when the style changes; the construction bed is sliced into one-shots with their own envelopes so the hammering tracks the build rather than looping under it.
+**The weather.** A storm is not a separate scene, it is the rain state leaned on: the same drop pool with its draw range opened all the way, falling faster and slanting harder, under a sun that has almost gone and fog pulled in to a third of its reach. Lightning is a light of its own rather than a change to the sky, so a strike can flash over whatever the time of day happens to be — one leader and two or three return strokes on exponential decays, with the thunder scheduled by how far off the strike was, quieter the longer it takes to arrive. Snow runs on a slow clock of calm, build, blow and ease; the blizzard opens the flake pool, thickens the flakes, drives them sideways and pulls the fog in, while a separate counter tracks what has already landed and keeps whitening the ground, the stones and the blades for as long as it falls.
 
-![The Chinese pagoda at noon in the rain, with pooled water across the field](assets/towers-china.jpg)
+**The sound.** Fifteen clips were generated with Higgsfield — `sonilo_music` for the three scores, `mirelo_text_to_audio` for the construction beds, bells, rain, storm, thunder and wind — encoded to mono AAC and embedded as data URIs (931 KB). Each weather bed is wrapped onto itself before encoding, tail cross-faded over head and the overlap discarded, so it loops with no seam to hear. Music and weather ride separate buses: the style cross-fades one, the blizzard swells a second bed over the first, and the construction bed is sliced into one-shots with their own envelopes so the hammering tracks the build rather than looping under it.
+
+![The tenshu in a blizzard, the field gone white and the snow driving sideways](assets/towers-snow.jpg)
 
 ## Run locally
 
@@ -56,11 +62,13 @@ towers/
 └── assets/      # README previews only, not used at runtime
 ```
 
-`index.html` is 1.8 MB, and most of that is payload rather than code: a vendored Three.js r149 build (593 KB), the texture set (565 KB) and the audio (609 KB), all inline.
+`index.html` is 2.2 MB, and most of that is payload rather than code: a vendored Three.js r149 build (593 KB), the texture set (565 KB) and the audio (931 KB), all inline.
 
 ## Keyboard
 
 `Space` play or pause · `R` rebuild · `S` style · `T` time of day · `W` weather · `C` recentre the camera
+
+On a phone: drag to orbit, pinch to zoom, double-tap to recentre.
 
 ## Design and attribution
 
